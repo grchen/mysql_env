@@ -1,0 +1,33 @@
+
+[mysqld]
+innodb_buffer_pool_size=200M
+server-id=3
+log-bin=mysql-bin
+plugin-load=semisync_slave.so
+rpl_semi_sync_slave_enabled=1
+max_connections=5000
+back_log = 50
+binlog_format = ROW
+binlog-ignore-db = information_schema
+expire_logs_days = 1
+explicit_defaults_for_timestamp = ON
+innodb_flush_method = O_DIRECT
+innodb_log_files_in_group = 4
+innodb_log_file_size = 1500M
+innodb_open_files = 512
+key_buffer_size = 16M
+local_infile = OFF
+read_buffer_size = 262144
+read_rnd_buffer_size = 524288
+innodb_log_buffer_size = 16777216
+innodb_buffer_pool_instances = 16
+innodb_io_capacity = 12000
+innodb_flush_neighbors = 0
+
+gtid_mode=on
+enforce_gtid_consistency=on
+master_info_repository=table
+relay_log_info_repository=table
+binlog_checksum=none
+log_slave_updates=on
+

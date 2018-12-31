@@ -1,0 +1,90 @@
+[client]
+default-character-set = utf8
+
+[mysqldump]
+quick
+
+[mysql]
+no-auto-rehash
+
+[myisamchk]
+key_buffer_size = 256K
+sort_buffer_size = 256K
+read_buffer = 256K
+write_buffer = 256K
+
+[mysqlhotcopy]
+interactive-timeout
+
+[mysqld]
+back_log = 50
+bind-address = 0.0.0.0
+binlog-ignore-db = information_schema
+binlog_format = ROW
+character_set_server = UTF8
+plugin-load = "threadpool.so;semisync_slave.so;semisync_master.so"
+threadpool = FORCE_PLUS_PERMANENT
+innodb_stats_include_delete_marked = ON
+default_storage_engine = InnoDB
+enforce_gtid_consistency = true
+expire_logs_days = 1
+explicit_defaults_for_timestamp = OFF
+gtid_mode = on
+innodb_buffer_pool_size = 300M
+innodb_data_file_path = ibdata1:128M:autoextend
+innodb_file_per_table = ON
+innodb_flush_method = O_DIRECT
+innodb_log_files_in_group = 4
+innodb_log_file_size = 100M
+key_buffer_size = 16M
+log-bin = mysql-bin
+log_bin_trust_function_creators = ON
+log_slave_updates = true
+master_info_repository = TABLE
+threadpool_oversubscribe = 1
+max_binlog_size = 67108864
+max_connections = 10728
+open_files_limit = 500000
+read_buffer_size = 262144
+read_rnd_buffer_size = 524288
+relay-log = rds_mysql-relay-bin
+replicate_ignore_db = information_schema
+server-id = 2
+skip-name-resolve
+skip-slave-start
+skip-symbolic-links
+slow_query_log = ON
+sql_mode = STRICT_ALL_TABLES,NO_AUTO_CREATE_USER
+ssl-ca = /CA/ca.pem
+ssl-cert = /CA/server.pem
+ssl-key = /CA/server.key
+sync_binlog = 1
+slave_parallel_type = LOGICAL_CLOCK
+rds_permission_control = ON
+rds_reserved_users = rdsAdmin,rdsBackup,rdsRepl,rdsMetric
+disabled_storage_engines = myisam,memory
+performance_schema = OFF
+block_encryption_mode = aes-128-cbc
+binlog_error_action = ABORT_SERVER
+innodb_open_files = 3000
+thread_cache_size = 100
+relay_log_info_repository = TABLE
+local_infile = ON
+skip_external_locking = ON
+lower_case_table_names = 1
+max_allowed_packet = 1073741824
+log_timestamps = SYSTEM
+slave_preserve_commit_order = ON
+slave_net_timeout = 60
+relay-log-space-limit = 0
+innodb_log_buffer_size = 16777216
+slave_parallel_workers = 256
+innodb_flush_neighbors = 0
+threadpool_size = 512
+innodb_buffer_pool_instances = 16
+innodb_io_capacity_max = 24000
+innodb_page_cleaners = 16
+innodb_io_capacity = 12000
+rpl_semi_sync_master_enabled = 1
+read_only = OFF
+binlog_checksum=none

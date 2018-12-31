@@ -1,0 +1,153 @@
+[client]
+default-character-set = utf8
+
+[mysqldump]
+quick
+
+[mysql]
+no-auto-rehash
+
+[myisamchk]
+key_buffer_size = 256K
+sort_buffer_size = 256K
+read_buffer = 256K
+write_buffer = 256K
+
+[mysqlhotcopy]
+interactive-timeout
+
+[mysqld]
+back_log = 1000
+bind-address = 0.0.0.0
+binlog_format = ROW
+character_set_server = UTF8
+plugin-load = "threadpool.so"
+threadpool = FORCE_PLUS_PERMANENT
+innodb_stats_include_delete_marked = ON
+datadir = /var/lib/mysql/data
+default_storage_engine = InnoDB
+enforce_gtid_consistency = ON
+expire_logs_days = 1
+explicit_defaults_for_timestamp = ON
+gtid_mode = on
+innodb_buffer_pool_size = 5368709120
+innodb_data_file_path = ibdata1:128M:autoextend
+innodb_file_per_table = ON
+innodb_flush_method = O_DIRECT
+innodb_log_files_in_group = 4
+innodb_log_file_size = 1000M
+key_buffer_size = 16M
+log-bin = mysql-bin
+log_bin_trust_function_creators = ON
+log_slave_updates = true
+master_info_repository = TABLE
+threadpool_oversubscribe = 1
+max_binlog_size = 536870912
+max_connections = 2500
+open_files_limit = 500000
+port = 3306
+read_buffer_size = 262144
+read_rnd_buffer_size = 524288
+relay-log = rds_mysql-relay-bin
+replicate_ignore_db = information_schema
+server-id = 2
+skip-name-resolve
+skip-slave-start
+skip-symbolic-links
+slow_query_log = ON
+ssl-ca = /CA/ca.pem
+ssl-cert = /CA/server.pem
+ssl-key = /CA/server.key
+sync_binlog = 1
+slave_parallel_type = LOGICAL_CLOCK
+rds_permission_control = ON
+rds_reserved_users = rdsAdmin,rdsBackup,rdsRepl,rdsMetric
+disabled_storage_engines = myisam,memory
+binlog_error_action = ABORT_SERVER
+innodb_open_files = 3000
+thread_cache_size = 100
+relay_log_info_repository = TABLE
+relay_log_recovery = ON
+local_infile = ON
+skip_external_locking = ON
+lower_case_table_names = 1
+max_allowed_packet = 1073741824
+log_timestamps = SYSTEM
+slave_preserve_commit_order = ON
+binlog_rows_query_log_events = ON
+innodb_file_format_max = Barracuda
+innodb_strict_mode = ON
+innodb_undo_log_truncate = ON
+log_bin_use_v1_row_events = ON
+long_query_time = 1
+max_heap_table_size = 67108864
+sql_mode = 
+myisam_max_sort_file_size = 2097152
+transaction_write_set_extraction = XXHASH64
+transaction_isolation = READ-COMMITTED
+binlog_checksum = NONE
+performance_schema = ON
+performance_schema_instrument = '%=OFF'
+performance_schema_accounts_size = 0
+performance_schema_digests_size = 0
+performance_schema_events_stages_history_long_size = 0
+performance_schema_events_stages_history_size = 0
+performance_schema_events_statements_history_long_size = 0
+performance_schema_events_statements_history_size = 0
+performance_schema_events_transactions_history_long_size = 0
+performance_schema_events_transactions_history_size = 0
+performance_schema_events_waits_history_long_size = 0
+performance_schema_events_waits_history_size = 0
+performance_schema_hosts_size = 0
+performance_schema_max_cond_classes = 0
+performance_schema_max_cond_instances = 0
+performance_schema_max_digest_length = 0
+performance_schema_max_file_classes = 0
+performance_schema_max_file_handles = 0
+performance_schema_max_file_instances = 0
+performance_schema_max_index_stat = 0
+performance_schema_max_memory_classes = 0
+performance_schema_max_metadata_locks = 0
+performance_schema_max_mutex_classes = 0
+performance_schema_max_mutex_instances = 0
+performance_schema_max_prepared_statements_instances = 0
+performance_schema_max_program_instances = 0
+performance_schema_max_rwlock_classes = 0
+performance_schema_max_rwlock_instances = 0
+performance_schema_max_socket_classes = 0
+performance_schema_max_socket_instances = 0
+performance_schema_max_sql_text_length = 0
+performance_schema_max_stage_classes = 0
+performance_schema_max_statement_classes = 0
+performance_schema_max_table_handles = 0
+performance_schema_max_table_instances = 0
+performance_schema_max_table_lock_stat = 0
+performance_schema_max_thread_classes = 0
+performance_schema_max_thread_instances = 0
+performance_schema_session_connect_attrs_size = 0
+performance_schema_setup_actors_size = 0
+performance_schema_setup_objects_size = 0
+performance_schema_users_size = 0
+create_default_primary_key = 1
+loose-group-replication-start-on-boot = OFF
+loose-group-replication-bootstrap-group = OFF
+loose-group-replication-single-primary-mode = ON
+loose-group-replication-force-rollback-when-one-member-online = ON
+loose-group-replication-check-view-expired = ON
+loose-group-replication-rds-trx-segment-enable-at = BEFORE_COMMIT
+loose-group-replication-transaction-size-limit = 157286400
+loose-group-replication-flow-control-certifier-threshold = 250000
+loose-group-replication-flow-control-applier-threshold = 250000
+slave_net_timeout = 60
+relay-log-space-limit = 0
+innodb_log_buffer_size = 16777216
+slave_parallel_workers = 8
+#validate-password = FORCE_PLUS_PERMANENT
+#validate_password_check_user_name = ON
+innodb_flush_neighbors = 1
+threadpool_size = 16
+innodb_buffer_pool_instances = 2
+innodb_io_capacity_max = 2000
+innodb_page_cleaners = 2
+innodb_io_capacity = 200
+loose-group-replication-group-name = 60fc7b30-dc20-452c-a9f6-1c4210eccc76
