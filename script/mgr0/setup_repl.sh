@@ -26,13 +26,15 @@ ${MYSQL_PATH}/mysql -uroot -h${HOST_IP} -P ${MASTER_PORT} -e "show master status
 if [[ ${TAG} =~ "8.0" ]];then
     MYSQL_PWD=${MASTER_MYSQL_ROOT_PASSWORD} \
     ${MYSQL_PATH}/mysql -u root -h ${HOST_IP} -P ${MASTER_PORT} \
-    -e "CREATE USER 'slave'@'%' IDENTIFIED WITH mysql_native_password BY '123456'; \
+    -e "CREATE USER 'slave'@'%' IDENTIFIED WITH mysql_native_password BY '123456'; 
     GRANT REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'slave'@'%';"
 else
     MYSQL_PWD=${MASTER_MYSQL_ROOT_PASSWORD} \
     ${MYSQL_PATH}/mysql -u root -h ${HOST_IP} -P ${MASTER_PORT} \
-    -e "CREATE USER 'slave'@'%' IDENTIFIED BY '123456'; \
-    GRANT REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'slave'@'%';"
+    -e "CREATE USER 'slave'@'%' IDENTIFIED BY '123456'; 
+    GRANT REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'slave'@'%';
+	CREATE USER 'slave'@'127.0.0.1' IDENTIFIED BY '123456'; 
+    GRANT REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'slave'@'127.0.0.1';"
 fi
 
 ##################################
@@ -57,18 +59,29 @@ done
 # set node master
 ##################################
 if [ ${HWSQL} -eq 1 ]
-then 
-    MYSQL_PWD=${SLAVE_MYSQL_ROOT_PASSWORD} ${MYSQL_PATH}/mysql -u root -h ${HOST_IP} -P ${SLAVE_PORT} \
-    -e "CHANGE MASTER TO MASTER_HOST='${HOST_IP}', \
-    MASTER_USER='slave', \
-    MASTER_PASSWORD='123456', \
-    MASTER_AUTO_POSITION=1;"
+then
+	if [[ ${TAG} =~ "8.0" ]]
+	  then
+          MYSQL_PWD=${SLAVE_MYSQL_ROOT_PASSWORD} ${MYSQL_PATH}/mysql -u root -h ${HOST_IP} -P ${SLAVE_PORT} \
+          -e "CHANGE MASTER TO MASTER_HOST='${HOST_IP}', 
+          MASTER_USER='slave', 
+          MASTER_PASSWORD='123456', 
+          MASTER_LOG_FILE='${LOG_FILE}', 
+          MASTER_LOG_POS=${LOG_POS};"
+	  else
+	      MYSQL_PWD=${SLAVE_MYSQL_ROOT_PASSWORD} ${MYSQL_PATH}/mysql -u root -h ${HOST_IP} -P ${SLAVE_PORT} \
+          -e "CHANGE MASTER TO MASTER_HOST='${HOST_IP}', 
+          MASTER_USER='slave', 
+          MASTER_PASSWORD='123456', 
+          MASTER_AUTO_POSITION=1;"
+	  fi 
+    
 else
     MYSQL_PWD=${SLAVE_MYSQL_ROOT_PASSWORD} ${MYSQL_PATH}/mysql -u root -h ${HOST_IP} -P ${SLAVE_PORT} \
-    -e "CHANGE MASTER TO MASTER_HOST='${HOST_IP}', \
-    MASTER_USER='slave', \
-    MASTER_PASSWORD='123456', \
-    MASTER_LOG_FILE='${LOG_FILE}', \
+    -e "CHANGE MASTER TO MASTER_HOST='${HOST_IP}', 
+    MASTER_USER='slave', 
+    MASTER_PASSWORD='123456', 
+    MASTER_LOG_FILE='${LOG_FILE}', 
     MASTER_LOG_POS=${LOG_POS};"
 fi
 

@@ -1,0 +1,7 @@
+begin to initialize and start mysql...
+stop the mysql master and slave if exist
+master has stopped !
+slave has stopped !
+the mysql master and slave stoped
+ERASE everyting in /Users/grchen/Homework/mysql_env/data/master and /Users/grchen/Homework/mysql_env/master
+start mysqld

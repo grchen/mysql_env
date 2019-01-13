@@ -42,7 +42,7 @@ then
 	  then
           ADD_MYSQL_CNF=${BASE_DIR}/cnf/hwsql/8.0/mgr_slave.cnf
 	  else
-	      ADD_MYSQL_CNF=${BASE_DIR}/cnf/hwsql/mgr_salve.cnf
+	      ADD_MYSQL_CNF=${BASE_DIR}/cnf/hwsql/mgr_slave.cnf
 	  fi
   else
       ADD_MYSQL_CNF=${BASE_DIR}/cnf/mysql/slave.cnf
@@ -118,14 +118,14 @@ echo "" >> ${INSTALL_PATH}/etc/my.cnf
 echo "basedir=${MYSQL_INSTALL_PATH}" >> ${INSTALL_PATH}/etc/my.cnf
 echo "datadir=${DATA_DIR}" >> ${INSTALL_PATH}/etc/my.cnf
 echo "socket=${INSTALL_PATH}/mysql.sock" >> ${INSTALL_PATH}/etc/my.cnf
-if [[ ${TAG} =~ "8.0" ]];then
-    echo "mysqlx_socket=${INSTALL_PATH}/mysqlx.sock" >> ${INSTALL_PATH}/etc/my.cnf
-fi
+#if [[ ${TAG} =~ "8.0" ]];then
+#    echo "mysqlx_socket=${INSTALL_PATH}/mysqlx.sock" >> ${INSTALL_PATH}/etc/my.cnf
+#fi
 
 echo "port=${PORT}" >> ${INSTALL_PATH}/etc/my.cnf
-if [[ ${TAG} =~ "8.0" ]];then
-    echo "mysqlx_port=${PORT}0" >> ${INSTALL_PATH}/etc/my.cnf
-fi
+#if [[ ${TAG} =~ "8.0" ]];then
+#    echo "mysqlx_port=${PORT}0" >> ${INSTALL_PATH}/etc/my.cnf
+#fi
 echo "user=root" >> ${INSTALL_PATH}/etc/my.cnf
 echo "secure-file-priv=\"\"" >> ${INSTALL_PATH}/etc/my.cnf
 
@@ -160,7 +160,12 @@ chmod u+x ${INSTALL_PATH}/mysqlcli
 #init database
 ######################
 cd ${MYSQL_INSTALL_PATH}
-bin/mysqld --defaults-file=${INSTALL_PATH}/etc/my.cnf --basedir=${MYSQL_INSTALL_PATH} --datadir=${DATA_DIR} --initialize-insecure
+if [ -f scripts/mysql_install_db ]
+then
+    scripts/mysql_install_db --defaults-file=${INSTALL_PATH}/etc/my.cnf --datadir=${DATA_DIR}
+else
+    bin/mysqld --defaults-file=${INSTALL_PATH}/etc/my.cnf --basedir=${MYSQL_INSTALL_PATH} --datadir=${DATA_DIR} --initialize-insecure
+fi
 
 
 ######################

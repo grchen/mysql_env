@@ -49,7 +49,7 @@ read_rnd_buffer_size = 524288
 relay-log = rds_mysql-relay-bin
 replicate_ignore_db = information_schema
 server-id = 1
-skip-name-resolve
+#skip-name-resolve
 skip-slave-start
 skip-symbolic-links
 slow_query_log = ON
@@ -72,7 +72,7 @@ local_infile = ON
 skip_external_locking = ON
 lower_case_table_names = 1
 max_allowed_packet = 1073741824
-log_timestamps = SYSTEM
+#log_timestamps = SYSTEM
 slave_preserve_commit_order = ON
 slave_net_timeout = 60
 relay-log-space-limit = 0

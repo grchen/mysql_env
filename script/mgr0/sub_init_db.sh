@@ -113,7 +113,12 @@ chmod u+x ${INSTALL_PATH}/mysqlcli
 #init database
 ######################
 cd ${MYSQL_INSTALL_PATH}
-bin/mysqld --defaults-file=${INSTALL_PATH}/etc/my.cnf --basedir=${MYSQL_INSTALL_PATH} --datadir=${DATA_DIR} --initialize-insecure
+if [ -f scripts/mysql_install_db ]
+then
+    scripts/mysql_install_db --defaults-file=${INSTALL_PATH}/etc/my.cnf --datadir=${DATA_DIR}
+else
+    bin/mysqld --defaults-file=${INSTALL_PATH}/etc/my.cnf --basedir=${MYSQL_INSTALL_PATH} --datadir=${DATA_DIR} --initialize-insecure
+fi
 
 
 ######################
