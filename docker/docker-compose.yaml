@@ -1,0 +1,51 @@
+version: "3.3"
+
+services:
+  
+  mysql-master: &mysql
+    image: mysql:${TAG}
+    container_name: mysql-master
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MASTER_MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    volumes:
+      - ./data/master:/var/lib/mysql
+      - ./init-master.sh:/docker-entrypoint-initdb.d/1-init-master.sh
+      - ./master:/etc/mysql/conf.d
+    networks:
+      app_net:
+        # 固定子网ip，网段必须在子网络10.10.*.*
+        ipv4_address: 172.10.10.1
+
+  mysql-node-1: &mysql-node
+    image: mysql:${TAG}
+    container_name: mysql-node-1
+    environment:
+      - MYSQL_ROOT_PASSWORD=${NODE_MYSQL_ROOT_PASSWORD}
+      - MASTER_MYSQL_ROOT_PASSWORD=${MASTER_MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3307:3306"
+    depends_on:
+      - mysql-master
+    volumes:
+      - ./data/slave:/var/lib/mysql
+      - ./init-node.sh:/docker-entrypoint-initdb.d/1-init-node.sh
+      - ./slave:/etc/mysql/conf.d
+    networks:
+      app_net:
+        # 固定子网ip，网段必须在子网络10.10.*.*
+        ipv4_address: 172.10.10.2
+    
+networks:
+    # 配置docker network
+    app_net:
+        driver: bridge
+        ipam:
+            config:
+                # 子网络
+                - subnet: 172.10.0.0/16
+               
